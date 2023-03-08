@@ -5,7 +5,7 @@
     <button @click="$emit('showModal', dataPizza)" class="bg-[#f9fbfd] w-full h-full pb-12 pt-4 rounded-lg px-4">
       <img src="../assets/image/pizza1.jpg" alt="image" class="rounded-lg" />
       <h3 class="text-2xl font-bold mt-5">{{ dataPizza.name }}</h3>
-      <p class="text-xl">$.{{ dataPizza.price }}</p>
+      <p class="text-xl">${{ dataPizza.price }}</p>
     </button>
   </div>
 </template>

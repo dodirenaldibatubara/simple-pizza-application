@@ -26,7 +26,7 @@
 
           <div class="flex justify-between w-full items-center">
             <h5 class="font-bold mt-2 text-[18h5x]">Pizza Price :</h5>
-            <h5 class="font-bold mt-2 text-[18h5x]">$.{{ order.totalPizza }}</h5>
+            <h5 class="font-bold mt-2 text-[18h5x]">${{ order.totalPizza }}</h5>
           </div>
           <div class="flex justify-between w-full">
             <h4 class="text-[22px] font-bold mt-4">Total Price :</h4>
