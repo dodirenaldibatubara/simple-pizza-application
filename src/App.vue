@@ -82,6 +82,26 @@ export default {
       // console.log(this.popUp);
     },
 
+    // Pembanding topping di cart, topping ketika user menambahkan manual
+    checkToppingIsSame(toppingCart, toppingAdded) {
+      let isToppingTheSame = false;
+
+      if (toppingCart.length != toppingAdded.length) {
+        isToppingTheSame = false;
+      } else {
+        toppingAdded.forEach((t) => {
+          const getToppingName = toppingCart.map((item) => item.name);
+          if (getToppingName.includes(t.name)) {
+            isToppingTheSame = true;
+          } else {
+            isToppingTheSame = false;
+          }
+        });
+      }
+
+      return isToppingTheSame;
+    },
+
     addToCart(event) {
       // Berfungsi untuk menambahkan jumlah harga topping
       let totalTopping = event.topping.reduce((accumulator, object) => {
@@ -98,14 +118,29 @@ export default {
 
       console.log(event);
 
-      // ini berfungsi untuk cek apakah data item yang di klik user sudah ada atau belum di dalam pizza Order dengan ara cek index ke berapa jika data nya di temukan.
-
       // const existingPizzaIndex = this.pizzaOrder.findIndex((p) => p.id == event.id && p.topping.toString() == event.topping.toString());
 
-      const existingPizzaIndex = this.pizzaOrder.findIndex(checkSame);
-
+      // ini berfungsi untuk cek apakah data item yang di klik user sudah ada atau belum di dalam pizza Order dengan ara cek index ke berapa jika data nya di temukan.
+      let existingPizzaIndex = this.pizzaOrder.findIndex(checkSame);
       function checkSame(p) {
-        return p.id == event.id && p.topping.toString() == event.topping.toString();
+        return p.id == event.id;
+      }
+
+      // Kalo pizza sudah di add sebelumnya
+      if (existingPizzaIndex > -1) {
+        // Coba mengecek cart pizza satu per satu
+        this.pizzaOrder.forEach((element, index) => {
+          // Jalankan fungsi check topping
+          // Kalo topping pizza nya sama
+          if (this.checkToppingIsSame(element.topping, event.topping)) {
+            // Bakalan ngasi index dari pizza dengan topping yang sama
+            existingPizzaIndex = index;
+          }
+          // Kalo enggak minta dia untuk menambah ke cart yang baru
+          else {
+            existingPizzaIndex = -1;
+          }
+        });
       }
 
       //  batas
